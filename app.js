@@ -11,6 +11,19 @@ let todos = [
 app.get('/todos', (req, res) => {
   res.status(200).json(todos); // Send array as JSON
 });
+app.get('/', (req, res) => {
+  res.send('Todo API is running');
+});
+app.get('/todos/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const todo = todos.find(t => t.id === id);
+
+  if (!todo) {
+    return res.status(404).json({ message: "Todo not found" });
+  }
+
+  res.json(todo);
+});
 
 // POST New – Create
 app.post('/todos', (req, res) => {
